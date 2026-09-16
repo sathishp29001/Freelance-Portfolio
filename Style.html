@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Sathish P | Freelance Data Alchemist & Dashboard Wizard</title>
+    <!-- Google Fonts: Fredoka & Poppins for a playful vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-fun: #090d16;
+            --card-fun: rgba(30, 41, 59, 0.75);
+            --neon-pink: #f43f5e;
+            --neon-yellow: #facc15;
+            --neon-green: #4ade80;
+            --neon-purple: #c084fc;
+            --neon-cyan: #38bdf8;
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-fun);
+            color: var(--text-main);
+        }
+
+        body {
+            overflow-x: hidden;
+            background: var(--bg-fun);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Interactive Animated Data Background Canvas */
+        #dataCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Reveal Animation for Elements */
+        .reveal-fun {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal-fun.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Fun Floating Navbar */
+        .fun-navbar {
+            position: fixed;
+            top: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1100px;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(250, 204, 21, 0.3);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .fun-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        /* Data Analyst Profile Image Styling next to Name */
+        .brand-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            animation: pulseAvatar 3s infinite alternate;
+        }
+
+        @keyframes pulseAvatar {
+            0% { transform: scale(1); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
+            100% { transform: scale(1.05); box-shadow: 0 0 16px rgba(56, 189, 248, 0.7); }
+        }
+
+        .fun-nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .fun-nav-links a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .fun-nav-links a:hover {
+            color: var(--neon-yellow);
+        }
+
+        .hire-btn {
+            background: var(--neon-pink);
+            color: #fff !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .hire-btn:hover {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-fun {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 8% 4rem 8%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-box {
+            max-width: 850px;
+        }
+
+        .hero-fun h1 {
+            font-family: 'Fredoka', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-fun h1 span {
+            color: var(--neon-yellow);
+            text-shadow: 3px 3px 0px var(--neon-pink);
+        }
+
+        .fun-typing-box {
+            font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+            color: var(--neon-cyan);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            min-height: 2rem;
+        }
+
+        .hero-fun p {
+            color: var(--text-sub);
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            line-height: 1.7;
+            max-width: 680px;
+            margin: 0 auto 2.5rem auto;
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-fun-primary {
+            background: var(--neon-yellow);
+            color: #000;
+            padding: 0.9rem 2rem;
+            border-radius: 14px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 6px 0 #ca8a04, 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-fun-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #ca8a04, 0 15px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn-fun-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #ca8a04;
+        }
+
+        .btn-fun-secondary {
+            background: var(--card-fun);
+            border: 2px solid var(--neon-purple);
+            color: var(--text-main);
+            padding: 0.9rem 2rem;
+            border-radius: 14px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 6px 0 #7e22ce, 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-fun-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #7e22ce;
+        }
+
+        /* Section Layouts */
+        .section {
+            padding: 6rem 8%;
+            max-width: 1350px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-family: 'Fredoka', cursive;
+            font-size: 0.95rem;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            background: rgba(244, 63, 94, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+        }
+
+        .section-title {
+            font-family: 'Fredoka', cursive;
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            font-weight: 700;
+        }
+
+        /* Stats Cards (Fun Counter) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .stat-card {
+            background: var(--card-fun);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 2.2rem 1.5rem;
+            text-align: center;
+            box-shadow: 6px 6px 0px var(--neon-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) rotate(2deg);
+        }
+
+        .stat-card h3 {
+            font-family: 'Fredoka', cursive;
+            font-size: 3rem;
+            color: var(--neon-yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        /* Freelance Superpowers (Skills) */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-box {
+            background: var(--card-fun);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--neon-purple);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 6px 6px 0px var(--neon-purple);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .skill-box:hover {
+            transform: translateY(-8px) rotate(-1deg);
+            background: rgba(37, 47, 72, 0.85);
+        }
+
+        .skill-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(192, 132, 252, 0.15);
+            border: 2px solid var(--neon-purple);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-purple);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-box h3 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.35rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-box p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .fun-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .fun-tags span {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--neon-cyan);
+            border: 1px dashed var(--neon-cyan);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        /* Featured Arcade Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-arcade-card {
+            background: var(--card-fun);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--neon-pink);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 8px 8px 0px var(--neon-pink);
+            transition: all 0.35s ease;
+        }
+
+        .project-arcade-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+        }
+
+        .arcade-screen {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            border-bottom: 3px solid var(--neon-pink);
+        }
+
+        .arcade-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-arcade-card:hover .arcade-screen img {
+            transform: scale(1.1);
+        }
+
+        .arcade-body {
+            padding: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .arcade-genre {
+            font-family: 'Fredoka', cursive;
+            font-size: 0.8rem;
+            color: var(--neon-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .arcade-body h3 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .arcade-body p {
+            color: var(--text-sub);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 1.8rem;
+        }
+
+        .play-btn {
+            background: var(--neon-cyan);
+            color: #000;
+            padding: 0.7rem 1.4rem;
+            border-radius: 10px;
+            font-family: 'Fredoka', cursive;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            width: fit-content;
+            box-shadow: 0 4px 0 #0284c7;
+            transition: all 0.2s ease;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #0284c7;
+        }
+
+        /* Quest Log (Experience Timeline) */
+        .quest-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 4px dashed var(--neon-green);
+        }
+
+        .quest-node {
+            position: relative;
+            margin-bottom: 3.5rem;
+        }
+
+        .quest-node::before {
+            content: '⭐';
+            position: absolute;
+            left: -3.25rem;
+            top: 2px;
+            font-size: 1.25rem;
+            background: var(--card-fun);
+            border-radius: 50%;
+            padding: 2px;
+        }
+
+        .quest-box {
+            background: var(--card-fun);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--neon-green);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 6px 6px 0px var(--neon-green);
+        }
+
+        .quest-date {
+            font-family: 'Fredoka', cursive;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .quest-box h3 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .quest-box h4 {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .quest-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quest-box li {
+            color: var(--text-sub);
+            font-size: 0.92rem;
+            margin-bottom: 0.7rem;
+            position: relative;
+            padding-left: 1.4rem;
+            line-height: 1.6;
+        }
+
+        .quest-box li::before {
+            content: '🚀';
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        /* Trophy Room (Certificates) */
+        .trophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .trophy-card {
+            background: var(--card-fun);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--neon-yellow);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 6px 6px 0px var(--neon-yellow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .trophy-card:hover {
+            transform: translateY(-6px) rotate(-1deg);
+        }
+
+        .trophy-issuer {
+            font-family: 'Fredoka', cursive;
+            font-size: 0.85rem;
+            color: var(--neon-yellow);
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .trophy-card h3 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .claim-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            background: rgba(250, 204, 21, 0.1);
+            border: 2px solid var(--neon-yellow);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Fredoka', cursive;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            width: fit-content;
+            transition: all 0.2s ease;
+        }
+
+        .claim-btn:hover {
+            background: var(--neon-yellow);
+            color: #000;
+        }
+
+        /* Fun Contact Footer */
+        .party-footer {
+            padding: 6rem 8% 4rem 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .party-box {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            border: 4px solid var(--neon-pink);
+            border-radius: 30px;
+            padding: 4.5rem 2.5rem;
+            text-align: center;
+            box-shadow: 12px 12px 0px var(--neon-pink);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .party-box h2 {
+            font-family: 'Fredoka', cursive;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            margin-bottom: 1.2rem;
+        }
+
+        .party-box h2 span {
+            color: var(--neon-yellow);
+        }
+
+        .party-box p {
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .party-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .contact-badge-fun {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: 'Fredoka', cursive;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed var(--neon-cyan);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+        }
+
+        .contact-badge-fun i {
+            color: var(--neon-cyan);
+        }
+
+        .party-copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 1px;
+            border-top: 2px dashed rgba(255,255,255,0.1);
+            margin-top: 4rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .fun-navbar {
+                width: 92%;
+                padding: 0.7rem 1.4rem;
+            }
+            .fun-nav-links {
+                display: none;
+                position: absolute;
+                top: 125%;
+                left: 0;
+                width: 100%;
+                background: #1e293b;
+                flex-direction: column;
+                padding: 2rem;
+                border-radius: 20px;
+                border: 3px solid var(--neon-yellow);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+                text-align: center;
+            }
+            .fun-nav-links.active {
+                display: flex;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .hero-fun {
+                padding-top: 9rem;
+            }
+            .section {
+                padding: 4.5rem 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Interactive Data Background Canvas -->
+    <canvas id="dataCanvas"></canvas>
+
+    <!-- Fun Freelance Navbar with Data Analyst Image Next to Name (Period Removed) -->
+    <nav class="fun-navbar">
+        <a href="#" class="fun-brand">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=150&q=80" alt="Data Analyst" class="brand-avatar">
+            <span>Sathish P</span>
+        </a>
+        <button class="mobile-toggle" id="menuToggle" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="fun-nav-links" id="navLinks">
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#powers">Powers</a></li>
+            <li><a href="#arcade">Arcade</a></li>
+            <li><a href="#quests">Quests</a></li>
+            <li><a href="#trophies">Trophies</a></li>
+            <li><a href="#contact" class="hire-btn">Hire Me! 🚀</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-fun">
+        <div class="hero-box">
+            <h1>Turning Messy Data Into <span>Pure Magic!</span> ✨</h1>
+            <div class="fun-typing-box" id="typingText"></div>
+            <p>Hey there! I'm Sathish, your friendly neighborhood data wizard. I wrangle rogue spreadsheets, build killer Power BI dashboards, and hunt down hidden revenue insights in Bangalore!</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-fun-primary">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Let's Work Together!
+                </a>
+                <a href="https://github.com/Sathish29001/Sathish_Resume/blob/main/Sathish%20Resume.pdf" download class="btn-fun-secondary">
+                    <i class="fa-solid fa-file-arrow-down"></i> Grab My CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="section">
+        <div class="section-header">
+            <span class="section-tag">🎮 Game Stats</span>
+            <h2 class="section-title reveal-fun">My High Scores</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card reveal-fun">
+                <h3>25%</h3>
+                <p>Faster Decision Speeds 🏎️</p>
+            </div>
+            <div class="stat-card reveal-fun">
+                <h3>40%</h3>
+                <p>Less Report Headaches 🧠</p>
+            </div>
+            <div class="stat-card reveal-fun">
+                <h3>99%</h3>
+                <p>Data Accuracy Shield 🛡️</p>
+            </div>
+            <div class="stat-card reveal-fun">
+                <h3>1.6+</h3>
+                <p>Years in the Data Arena 🕹️</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freelance Superpowers Section -->
+    <section id="powers" class="section">
+        <div class="section-header">
+            <span class="section-tag">⚡ Superpowers</span>
+            <h2 class="section-title reveal-fun">What I Can Do For Your Project</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-box reveal-fun">
+                <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
+                <h3>SQL Query Sorcery</h3>
+                <p>Writing bulletproof relational queries, complex CTEs, and automated database pipelines that never crash.</p>
+                <div class="fun-tags">
+                    <span>MySQL</span>
+                    <span>PostgreSQL</span>
+                    <span>SQLite</span>
+                    <span>BigQuery</span>
+                </div>
+            </div>
+
+            <div class="skill-box reveal-fun">
+                <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+                <h3>Python Automation</h3>
+                <p>Whipping up scripts to clean filthy datasets, run exploratory analysis, and automate boring daily routines.</p>
+                <div class="fun-tags">
+                    <span>Pandas</span>
+                    <span>NumPy</span>
+                    <span>Seaborn</span>
+                    <span>Jupyter</span>
+                </div>
+            </div>
+
+            <div class="skill-box reveal-fun">
+                <div class="skill-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                <h3>Dashboard Alchemy</h3>
+                <p>Transforming boring numbers into gorgeous, interactive Power BI and Tableau dashboards people actually love looking at.</p>
+                <div class="fun-tags">
+                    <span>Power BI</span>
+                    <span>DAX</span>
+                    <span>Tableau</span>
+                    <span>Excel Power Query</span>
+                </div>
+            </div>
+
+            <div class="skill-box reveal-fun">
+                <div class="skill-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                <h3>Detective Analytics</h3>
+                <p>Hunting down customer churn triggers, mapping user funnels, and uncovering hidden growth levers for your business.</p>
+                <div class="fun-tags">
+                    <span>Cohort Analysis</span>
+                    <span>Root Cause RCA</span>
+                    <span>Funnel Metrics</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Arcade Projects (All 6 Projects Included) -->
+    <section id="arcade" class="section">
+        <div class="section-header">
+            <span class="section-tag">🕹️ The Arcade</span>
+            <h2 class="section-title reveal-fun">All Featured Side Quests & Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Churn Quest">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">🎮 Python & SQLite Boss Fight</span>
+                        <h3>Customer Churn Investigator</h3>
+                        <p>Built an automated pipeline uncovering why customers walk away, calculating a 28.57% churn rate with custom visual clusters.</p>
+                    </div>
+                    <a href="https://github.com/Sathish29001/Data-Anlaysis-Churn-Analysis-Project" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-gamepad"></i> Play Source Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Airbnb Quest">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">🌍 Power BI Open World</span>
+                        <h3>Global Airbnb Market Explorer</h3>
+                        <p>Modeled over 279K+ listings and 5.3M+ reviews across 10 global cities to check out pricing trends and host trust badges.</p>
+                    </div>
+                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7500438415004450816/" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-eye"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Store Quest">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">📦 MySQL Relational Dungeon</span>
+                        <h3>General Store Auditing Tool</h3>
+                        <p>Designed a rigorous 3NF schema auditing $2.29M in retail transactions using advanced window functions and lightning-fast CTEs.</p>
+                    </div>
+                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7466884086746488832/" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-rocket"></i> Inspect Quest
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" alt="Fitness Dashboard">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">⚡ Power BI & Star Schema</span>
+                        <h3>Financial & Fitness Operations</h3>
+                        <p>Consolidated metrics for a $4M revenue portfolio across 100+ clients and 20 personal trainers with customized DAX measures.</p>
+                    </div>
+                    <a href="https://www.linkedin.com/posts/sathish-p-5a5670237_fitness-dashboard-analysis-power-bi-ugcPost-7465742488301981696-dKK0/" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-eye"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Wellness Study">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">🏃‍♂️ Python & Wearables</span>
+                        <h3>Wellness Behavioral Cohort Analysis</h3>
+                        <p>Analyzed smart wearable datasets using Pandas and NumPy to surface actionable behavioral clusters and health recommendations.</p>
+                    </div>
+                    <a href="https://www.kaggle.com/code/sathishp2901/case-study-how-can-a-wellness-company-play-it-safe" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-gamepad"></i> Play Kaggle Study
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-arcade-card reveal-fun">
+                <div class="arcade-screen">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Automotive Sales">
+                </div>
+                <div class="arcade-body">
+                    <div>
+                        <span class="arcade-genre">🏎️ Power BI & Financial Modeling</span>
+                        <h3>Automotive Sales Performance</h3>
+                        <p>Engineered a global dashboard tracking €3.20B in revenue and €768M in operating income across 940 distinct units.</p>
+                    </div>
+                    <a href="https://www.linkedin.com/posts/sathish-p-5a5670237_lamborghini-sales-performance-2025-objective-share-7465741615693885440-VelP/" target="_blank" rel="noopener" class="play-btn">
+                        <i class="fa-solid fa-eye"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quest Log (Experience Timeline) -->
+    <section id="quests" class="section">
+        <div class="section-header">
+            <span class="section-tag">📜 Quest Log</span>
+            <h2 class="section-title reveal-fun">Where I've Leveled Up</h2>
+        </div>
+
+        <div class="quest-timeline">
+            <div class="quest-node reveal-fun">
+                <div class="quest-box">
+                    <span class="quest-date">July 2024 - January 2026 (1.6 Years)</span>
+                    <h3>Operations Analyst</h3>
+                    <h4>Vindhya E-Infomedia Pvt Ltd | Bangalore, Karnataka</h4>
+                    <ul>
+                        <li>Streamlined massive loan application datasets using Excel, slashing drop-offs and boosting lead conversions by 12%!</li>
+                        <li>Ran bulletproof daily reconciliation checks on thousands of financial entries to lock in 99% data integrity.</li>
+                        <li>Created custom demographic buyer profiles to give field sales teams an unfair advantage.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trophy Room (Certificates) -->
+    <section id="trophies" class="section">
+        <div class="section-header">
+            <span class="section-tag">🏆 Trophy Room</span>
+            <h2 class="section-title reveal-fun">Badges & Achievements Unlocked</h2>
+        </div>
+
+        <div class="trophy-grid">
+            <div class="trophy-card reveal-fun">
+                <div>
+                    <span class="trophy-issuer">🏅 Coursera Verified Quest</span>
+                    <h3>Google Data Analytics Professional Certificate</h3>
+                    <p style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.6;">Conquered spreadsheets, advanced SQL, Tableau visuals, and R programming fundamentals.</p>
+                </div>
+                <a href="https://coursera.org/verify/professional-cert/GMTLEIFRVCPJ" target="_blank" rel="noopener" class="claim-btn">
+                    <i class="fa-solid fa-trophy"></i> Inspect Trophy
+                </a>
+            </div>
+
+            <div class="trophy-card reveal-fun">
+                <div>
+                    <span class="trophy-issuer">🏅 Coursera Verified Quest</span>
+                    <h3>Google Data Analysis with Python</h3>
+                    <p style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.6;">Unlocked advanced Python scripting, Pandas data magic, NumPy calculations, and Jupyter Notebook mastery.</p>
+                </div>
+                <a href="https://coursera.org/verify/specialization/G3LQ7VB44HHX" target="_blank" rel="noopener" class="claim-btn">
+                    <i class="fa-solid fa-trophy"></i> Inspect Trophy
+                </a>
+            </div>
+
+            <div class="trophy-card reveal-fun">
+                <div>
+                    <span class="trophy-issuer">🎓 SRN Adarsh College</span>
+                    <h3>Bachelor of Commerce (B.Com)</h3>
+                    <p style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.6;">Built a solid foundation in corporate accounting, financial analysis, and business applications.</p>
+                </div>
+                <span style="display:inline-block; margin-top:1.5rem; font-family:'Fredoka', cursive; font-size:0.85rem; color:var(--neon-yellow);">Completed: 2022</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Contact Footer -->
+    <section id="contact" class="party-footer">
+        <div class="party-box reveal-fun">
+            <span class="section-tag" style="margin-bottom:1rem;">🎉 Final Boss Level</span>
+            <h2>Ready to Start Your <span>Next Project?</span></h2>
+            <p>I'm currently taking on freelance clients and full-time freelance gigs in Bangalore. Got a messy spreadsheet or dashboard project? Let's talk!</p>
+            
+            <div class="party-contacts">
+                <div class="contact-badge-fun"><i class="fa-solid fa-envelope"></i> sathishp29001@gmail.com</div>
+                <div class="contact-badge-fun"><i class="fa-solid fa-phone"></i> +91 7975944395</div>
+                <div class="contact-badge-fun"><i class="fa-solid fa-location-dot"></i> Bangalore, India</div>
+            </div>
+
+            <div class="hero-actions">
+                <a href="mailto:sathishp29001@gmail.com" class="btn-fun-primary">
+                    <i class="fa-solid fa-paper-plane"></i> Send Me a Message! 🚀
+                </a>
+                <a href="https://www.linkedin.com/in/sathish-p-5a5670237/" target="_blank" rel="noopener" class="btn-fun-secondary">
+                    <i class="fa-brands fa-linkedin"></i> Let's Connect
+                </a>
+            </div>
+        </div>
+
+        <div class="party-copyright">
+            &copy; 2026 Sathish P. Built with code, coffee, and pure freelancer energy! ⚡
+        </div>
+    </section>
+
+    <!-- JavaScript for Interactivity, Menu, Scroll Animations & Data Background Canvas -->
+    <script>
+        // Mobile Navigation Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+        });
+
+        // Interactive Data Background Animation (Nodes, Binary/Data streams & Connections)
+        const canvas = document.getElementById('dataCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const symbols = ['0', '1', 'SQL', '📊', '📈', '⚡', 'SELECT', 'Pandas', '{}', '->', 'Python', 'BI'];
+        let particles = [];
+        const particleCount = Math.floor(window.innerWidth / 35);
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 1.2,
+                vy: (Math.random() - 0.5) * 1.2,
+                size: Math.random() * 18 + 10,
+                text: symbols[Math.floor(Math.random() * symbols.length)],
+                alpha: Math.random() * 0.4 + 0.1
+            });
+        }
+
+        function animateDataBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connecting lines between close particles
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 130)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw particle nodes and symbols
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`;
+                ctx.font = `${p.size}px 'Poppins', monospace`;
+                ctx.fillText(p.text, p.x, p.y);
+
+                // Small dot node
+                ctx.beginPath();
+                ctx.arc(p.x, p.y + 4, 2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(250, 204, 21, ${p.alpha + 0.2})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateDataBackground);
+        }
+
+        animateDataBackground();
+
+        // Scroll Reveal Intersection Observer Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-fun').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Fun Typing Effect for Hero Subheader
+        const funPhrases = [
+            "📊 SQL & Python Freelance Wizard",
+            "⚡ Power BI Dashboard Creator",
+            "🚀 Turning Data Chaos Into Clarity",
+            "☕ Fueled by Coffee & Clean Code"
+        ];
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let deleting = false;
+        const typingBox = document.getElementById('typingText');
+
+        function typeWriterFun() {
+            const current = funPhrases[phraseIdx];
+            if (deleting) {
+                typingBox.innerHTML = current.substring(0, charIdx - 1) + "✨";
+                charIdx--;
+            } else {
+                typingBox.innerHTML = current.substring(0, charIdx + 1) + "✨";
+                charIdx++;
+            }
+
+            let speed = deleting ? 35 : 75;
+
+            if (!deleting && charIdx === current.length) {
+                speed = 2000;
+                deleting = true;
+            } else if (deleting && charIdx === 0) {
+                deleting = false;
+                phraseIdx = (phraseIdx + 1) % funPhrases.length;
+                speed = 400;
+            }
+
+            setTimeout(typeWriterFun, speed);
+        }
+
+        document.addEventListener('DOMContentLoaded', typeWriterFun);
+    </script>
+</body>
+</html>
